@@ -1,0 +1,141 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 1rem 2rem;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.my-logo:hover{
+  rotate: 90deg;
+}
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-links a {
+  color: #2c3e50;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #1565c0;
+}
+.my-logo{
+  width: 30px;
+  height: 30px;
+}
+.nav-button {
+  background-color: #1565c0;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: #0d47a1;
+}
+
+.nav-mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #2c3e50;
+}
+
+@media (max-width: 768px) {
+  .nav-mobile-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    width: 30%;
+    margin-top: 5px;
+    top: 100%;
+    right: 7px;
+    background-color: white;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+}
+.user-info{
+  display: flex;
+}
+.user-icon {
+  background-color: #42789b; /* Icon background color */
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* Username text styling */
+.username {
+  font-size: 16px;
+  font-weight: 500;
+  align-self: center;
+}
+.logout-button:hover{
+  cursor: pointer;
+  color: #1565c0;
+}
+.logout-button{
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.magnifying-glass{
+  width: 30px;
+  height: 30px;
+}
+.section-style{
+  color: black;
+}
+.section-style:hover{
+  cursor: pointer;
+}
