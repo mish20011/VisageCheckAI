@@ -32,7 +32,8 @@ function Navbar() {
          onClick={() => {
           window.scrollTo({ top: 0, behavior: 'smooth' })}}>
         <img src = {myLogo} className='my-logo'/>
-          <span>Derma Doc AI</span>
+          <span>VisageCheckAI
+</span>
         </Link>
 
         <button className="nav-mobile-toggle" onClick={toggleMenu}>

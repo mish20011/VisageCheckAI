@@ -57,7 +57,8 @@ function HomePage() {
       <section className="hero">
         <video className="hero-video" src={HeroVideo} autoPlay muted loop />
         <div className="hero-content">
-          <h1 className="hero-hed">Derma Doc AI</h1>
+          <h1 className="hero-hed">VisageCheckAI
+</h1>
           <h2>Your ultimate solution for skin health</h2>
           <p className="hero-p">
             Upload images, input symptoms, and receive personalized treatment plans along with recommendations for nearby dermatologists.
@@ -68,12 +69,14 @@ function HomePage() {
 
       <div className="content-wrapper">
         <section className="about" id="about">
-          <h2>About Derma Doc AI</h2>
+          <h2>About VisageCheckAI
+</h2>
           <div className="about-content">
             <div className="about-text">
               <h3>Our Mission</h3>
               <p>
-                At Derma Doc AI, we're revolutionizing skin health care through the power of artificial intelligence. Our mission is to make professional-grade skin analysis accessible to everyone, anywhere, at any time.
+                At VisageCheckAI
+, we're revolutionizing skin health care through the power of artificial intelligence. Our mission is to make professional-grade skin analysis accessible to everyone, anywhere, at any time.
               </p>
               
               <h3>Why Choose Us?</h3>
@@ -153,23 +156,24 @@ function HomePage() {
         <div className="social-container">
           <h3>Connect With Us</h3>
           <div className="social-links">
-            <a href="https://twitter.com/dermadocai" target="_blank" rel="noopener noreferrer">
+            <a href="https://twitter.com/visagecheckai" target="_blank" rel="noopener noreferrer">
               <Twitter size={24} />
             </a>
-            <a href="https://facebook.com/dermadocai" target="_blank" rel="noopener noreferrer">
+            <a href="https://facebook.com/visagecheckai" target="_blank" rel="noopener noreferrer">
               <Facebook size={24} />
             </a>
-            <a href="https://instagram.com/dermadocai" target="_blank" rel="noopener noreferrer">
+            <a href="https://instagram.com/visagecheckai" target="_blank" rel="noopener noreferrer">
               <Instagram size={24} />
             </a>
-            <a href="https://linkedin.com/company/dermadocai" target="_blank" rel="noopener noreferrer">
+            <a href="https://linkedin.com/company/visagecheckai" target="_blank" rel="noopener noreferrer">
               <Linkedin size={24} />
             </a>
-            <a href="https://github.com/dermadocai" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/mish20011/VisageCheckAI" target="_blank" rel="noopener noreferrer">
               <Github size={24} />
             </a>
           </div>
-          <p className="copyright">© 2025 Derma Doc AI. All rights reserved.</p>
+          <p className="copyright">© 2025 VisageCheckAI
+. All rights reserved.</p>
         </div>
       </footer>
 

@@ -1,0 +1,14 @@
+{
+  "name": "visagecheckai-root",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "scripts": {
+    "start": "concurrently \"npm run react\" \"npm run node\" \"npm run python\"",
+    "react": "cd chat-app && npm start",
+    "node": "cd server-app/backend && npm start",
+    "python": "cd server-app/api && python TextAi.py"
+  }
+}

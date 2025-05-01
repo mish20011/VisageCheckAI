@@ -5,6 +5,8 @@ import axios from 'axios';
 import {Mic,X} from 'lucide-react';
 import googlePoint from './components/images/googlePoint.png';
 import imgIcon from './components/images/add_photo_alternate_24dp_666666_FILL0_wght400_GRAD0_opsz24.png';
+
+
 function App() {
   const { globalUsername } = useContext(NoteContext);
   const [query, setQuery] = useState('');
@@ -331,14 +333,23 @@ if ("webkitSpeechRecognition" in window) {
    {isRecording ? <X size={20}/> : <Mic size ={20}/>}
   </div>
   </div>
-        <textarea
+          <textarea
           className="query-searcher"
-          id = "myInput"
+          id="myInput"
           onChange={(e) => setQuery(e.target.value)}
           value={query}
-          placeholder="Message Derma Doc"
+          placeholder="Message VisageCheck"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault(); // prevent newline
+              if (!loading && (file || query.trim())) {
+                fetchRes(); // send the query
+              }
+            }
+          }}
         />
-        <p className="check-txt"> Derma Doc can make mistakes. Please consult with a actual doctor.</p>
+
+        <p className="check-txt"> VisageCheck can make mistakes. Please consult with a actual doctor.</p>
         <button onClick={fetchRes} disabled={loading || (!file && !query)} className="search-button">
           {loading ? (
             <div className="loading-spinner">

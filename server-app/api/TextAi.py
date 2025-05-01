@@ -15,6 +15,56 @@ import openai
 app = Flask(__name__)
 CORS(app)
 
+# ✅ Static dermatologist data for Laguna, PH
+static_doctors_laguna = [
+    {
+        "name": "Dr. Raul Jr O. Ojeda",
+        "qualifications": "MD, FPDS",
+        "specializations": "General Dermatology",
+        "experience": "San Pablo City, Laguna",
+        "clinics": ["San Pablo City, Laguna"],
+        "link": "https://pds.org.ph/search-dermatologist/?loc=laguna"
+    },
+    {
+        "name": "Dr. Luella Joy A. Escueta-Alcos",
+        "qualifications": "MD, FPDS",
+        "specializations": "Dermatologic Surgery",
+        "experience": "Los Baños, Laguna",
+        "clinics": ["Los Baños, Laguna"],
+        "link": "https://pds.org.ph/search-dermatologist/?loc=laguna"
+    },
+    {
+        "name": "Dr. Kathleen May E. Alpapara",
+        "qualifications": "MD",
+        "specializations": "Pediatric Dermatology",
+        "experience": "Calamba, Laguna",
+        "clinics": ["Calamba, Laguna"],
+        "link": "https://pds.org.ph/search-dermatologist/?loc=laguna"
+    },
+    {
+        "name": "Dr. Joan Joy Patricio",
+        "qualifications": "MD, DPDS",
+        "specializations": "Cosmetic Dermatology",
+        "experience": "San Pedro, Laguna",
+        "clinics": ["San Pedro, Laguna"],
+        "link": "https://pds.org.ph/search-dermatologist/?loc=laguna"
+    },
+    {
+        "name": "Dr. Andrea Bernales Mendoza",
+        "qualifications": "MD, MMHOA, FPDS, FPDS-PDS",
+        "specializations": "Aesthetic and Medical Dermatology",
+        "experience": "Cabuyao, Laguna",
+        "clinics": ["Cabuyao, Laguna"],
+        "link": "https://pds.org.ph/search-dermatologist/?loc=laguna"
+    }
+]
+
+def format_doctor_list(doctors):
+    return "\n".join([
+        f"- {d['name']} ({d.get('specializations', '')}) — {d['clinics'][0]} — Website: {d.get('link', '')}"
+        for d in doctors
+    ])
+
 
 dataset = load_dataset("Mostafijur/Skin_disease_classify_data")
 dataset1 = load_dataset("brucewayne0459/Skin_diseases_and_care")
@@ -267,16 +317,27 @@ def talk_to_chatBot(query):
         api_key="BTmCPY2Xbr1vZ9jhRAqafqzLLjR3KzTL"
     )
         
+    doctors_text = format_doctor_list(static_doctors_laguna)
+
     response = client.chat.completions.create(
         model="mistral-7b",
         messages=[{
             "role": "user",
-            "content": f"""You are a highly skilled medical expert specializing in evidence-based treatment planning. Respond to this query: '{query}'. 
-            Ask the patient only about  symptoms they may be experiencing. Do not ask about the duration, medical history, or other details—just focus on gathering more information about their symptoms in a brief and concise manner."""
+            "content": f"""You are a helpful skin health assistant. You only assist with facial skin conditions (like acne, eczema, melasma, rosacea, fungal infections, etc). 
+            If the user's question is unrelated, explain that this assistant is only for facial skin health. Respond to the user's query: '{query}'.
+
+    If the user is describing a problem, ask for more details about symptoms only (not duration or medical history).
+
+    If the user asks where to find help or consult a doctor, recommend a certified dermatologist in Laguna, Philippines. Here are some options:
+
+    {doctors_text}
+
+    Respond briefly and clearly."""
         }],
         max_tokens=1000,
         stream=True
     )
+
     formatted_text = ""
     for chunk in response:
         if chunk.choices[0].delta.content is not None:
@@ -284,29 +345,43 @@ def talk_to_chatBot(query):
     return formatted_text.strip()
 def formatDesc(disease):
     client = openai.OpenAI(
-  base_url="https://mistral-7b.lepton.run/api/v1/",
-  api_key="BTmCPY2Xbr1vZ9jhRAqafqzLLjR3KzTL"
+        base_url="https://mistral-7b.lepton.run/api/v1/",
+        api_key="BTmCPY2Xbr1vZ9jhRAqafqzLLjR3KzTL"
     )
+
+    doctors_text = format_doctor_list(static_doctors_laguna)
+
     response = client.chat.completions.create(
-  model="mistral-7b",
-  messages=[{"role": "user", "content": f"""You are a highly skilled medical expert specializing in evidence-based treatment planning. Based on the provided disease name {disease}, generate a complete and structured response that includes the following:
-    Disease Overview: Provide a brief overview of the disease, including its common causes, symptoms, and progression.
-    Symptoms: List the most common and relevant symptoms associated with the disease.
-    Treatment Plan: Create a step-by-step treatment plan, including:
-    Medications (with dosage and duration, if applicable).
-    Therapies (physical, occupational, psychological, etc.).
-    Lifestyle modifications.
-    Follow-up or monitoring recommendations.
-    Precautions: Include specific precautions the patient should take to prevent complications or recurrence.
-    Additional Notes: Add any relevant advice, warnings, or general information to enhance understanding and compliance.
-    Prognosis: Provide an outlook or expected outcome for the condition with proper treatment and care. replace * with space """}],
-  max_tokens=1000,
-  stream=True ) 
+        model="mistral-7b",
+        messages=[{
+            "role": "user",
+            "content": f"""You are a highly skilled AI medical assistant. You only respond to questions about facial skin conditions such as acne, melasma, rosacea, eczema, and fungal infections on the face. 
+            Ignore unrelated questions and kindly explain that this assistant is only for facial skin health.
+
+Based on the disease: {disease}, generate a structured explanation that includes:
+
+1. Disease Overview: Common causes and progression
+2. Symptoms: Key signs
+3. Treatment Plan: Medications, therapies, and lifestyle suggestions
+4. Precautions: What to avoid or watch for
+5. Prognosis: What to expect with proper treatment
+
+Also suggest that the patient consult a dermatologist in Laguna, Philippines. Here are some available doctors:
+
+{doctors_text}
+
+Include their names and websites in your recommendation if relevant."""
+        }],
+        max_tokens=1000,
+        stream=True
+    )
+
     formatted_text = ""
     for chunk in response:
         if chunk.choices[0].delta.content is not None:
             formatted_text += chunk.choices[0].delta.content
     return formatted_text.strip()
+
 @app.route('/api/TextAi', methods=['POST'])
 def GenResult():
     data = request.get_json()
@@ -321,29 +396,31 @@ def GenResult():
         if similar_disease is None:
             my_reply = talk_to_chatBot(input_query)
             return jsonify({
-                'disease': "",
-                'treatment': my_reply
-            })
-        city = user_location.get('city', "Bangalore") if user_location else "Bengalore"
-        print(city)
-        treatment_plan = formatDesc(similar_disease)
-        locality = user_location.get('locality', "Indiranagar") if user_location else "Indiranagar"
-        print(locality)
-        query = similar_disease.replace(" ", "%20")
-        mode = "symptom"
-        backupQuery = "dermatologist"
-        backupMode = "service"
+    'disease': "",
+    'treatment': my_reply,
+    'doctors': []  # ❌ No doctors in general chat replies
+})
 
-        doctor_info = fetchDoctors(user_location, query, mode, backupQuery, backupMode, locality,city)
-        
-        # Ensure we always return a valid response
+        treatment_plan = formatDesc(similar_disease)
+
+        # ✅ Use static dermatologist list
+        doctor_info = static_doctors_laguna
+
         response = {
             'disease': similar_disease,
             'treatment': treatment_plan,
-            'doctors': doctor_info if doctor_info else []  # Ensure doctors is always a list
+            'doctors': doctor_info
         }
         
         return jsonify(response)
+
+    except Exception as e:
+        print(f"Error in GenResult: {str(e)}")
+        return jsonify({
+            'disease': "Could not determine disease",
+            'treatment': "Please consult a dermatologist for proper diagnosis and treatment.",
+            'doctors': static_doctors_laguna
+        })
 
     except Exception as e:
         print(f"Error in GenResult: {str(e)}")
@@ -380,26 +457,18 @@ def image_ai():
     
     # Fetch treatment plan for the predicted disease
     treatment = formatDesc(predicted_disease)
-    # Use user's location if available, otherwise use default values
-    city = user_location.get('city', "Bangalore") if user_location else "Bangalore"
-    locality = user_location.get('locality', "Indiranagar") if user_location else "Indiranagar"
     
-    # Construct query parameters
-    query = predicted_disease.replace(" ", "%20")
-    mode = "symptom"
-    backupQuery = "dermatologist"
-    backupMode = "service"
-    
-    # Fetch doctors based on the predicted disease and user's location
-    doctor_info = fetchDoctors(user_location, query, mode, backupQuery, backupMode, locality, city)
+    # ✅ Use static dermatologist list
+    doctor_info = static_doctors_laguna
     
     # Construct the response
     response = {
         'disease': predicted_disease,
         'treatment': treatment,
-        'doctors': doctor_info if doctor_info else []
+        'doctors': doctor_info
     }
     
+
     return jsonify(response)
 
 if __name__ == '__main__':
