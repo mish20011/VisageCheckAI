@@ -67,24 +67,34 @@ This project serves as a diagnostic support tool, offering users:
 ### Installation Steps:
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/thebadsektor/tc3202-3a-9.git
-cd tc3202-3a-9
+## 1. Clone the repository
+git clone https://github.com/mish20011/VisageCheckAI.git
+cd VisageCheckAI
 
-# 2. Install React frontend dependencies
+## 2. Install React frontend dependencies
 cd chat-app
 npm install
 
-# 3. Install backend dependencies 
-cd server-app
+## 3. Install backend dependencies (Node backend)
+cd ../server-app
 npm install
 
-# 4. Install root dependencies (including concurrently)
-cd ../../
+## 3.5 Install Python backend dependencies (AI model backend)
+cd api
+python -m venv project_venv
+source project_venv/bin/activate      # (Windows: project_venv\Scripts\activate)
+pip install -r requirements.txt
+
+## 4. Install root dependencies (including concurrently)
+cd ../../../
 npm install
 
-# If you get an error about 'concurrently' not found, run this:
+# If you get an error about 'concurrently' not found:
 npm install concurrently --save-dev
+
+## (Optional) Install Git LFS if using LFS for models
+git lfs install
+
 ```
 
 ---
