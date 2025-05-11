@@ -1,0 +1,33 @@
+# System
+.DS_Store
+Thumbs.db
+
+# Environments
+.env
+.venv/
+server-app/api/project_venv/
+
+# Logs
+*.log
+
+# Node modules
+**/node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temp & cache
+*.cache
+*.out
+*.bak
+*.swp
+*.tmp
+
+# Editor settings
+.vscode/
+.idea/
+
+# Accidental files
+server-app/api/cd

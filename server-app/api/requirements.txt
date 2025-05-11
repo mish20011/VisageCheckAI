@@ -1,0 +1,13 @@
+requests
+torch
+torchvision
+torchaudio
+beautifulsoup4
+datasets
+flask
+flask-cors
+pillow
+scikit-learn
+transformers
+openai
+tensorflow
